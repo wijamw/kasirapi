@@ -4,12 +4,13 @@ import (
 	"database/sql"
 	"log"
 
-	_ "github.com/jackc/pgx/v5/stdlib"
+	//_ "github.com/jackc/pgx/v5/stdlib"
+	_ "github.com/lib/pq"
 )
 
 func InitDB(connectionString string) (*sql.DB, error) {
 	// Open database
-	db, err := sql.Open("pgx", connectionString)
+	db, err := sql.Open("postgres", connectionString)
 	if err != nil {
 		return nil, err
 	}
