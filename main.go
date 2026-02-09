@@ -50,6 +50,13 @@ func main() {
 	http.HandleFunc("/categories", catHandler.HandleCategories)
 	http.HandleFunc("/categories/", catHandler.HandleCategoryByID)
 	
+	transactionRepo := repositories.NewTransactionRepository(db)
+	transactionService := services.NewTransactionService(transactionRepo)
+	transactionHandler := handlers.NewTransactionHandler(transactionService)
+
+	http.HandleFunc("/categories/checkout", transactionHandler.HandleCheckout)
+	http.HandleFunc("/categories/report", transactionHandler.HandleReport)
+
 	// Health check
 	http.HandleFunc("/health", func(w http.ResponseWriter, r *http.Request) {
 		w.Header().Set("Content-Type", "application/json")
